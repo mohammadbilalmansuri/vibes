@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lemonada:wght@300..700&display=swap");
+
+@tailwind base;
+
+@layer base {
+  * {
+    font-family: "Nunito", sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-2.5;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent rounded-lg;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-secondary-400 dark:bg-primary-700 rounded-lg;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-secondary-500 dark:bg-primary-600;
+  }
+
+  .volume:hover .volumeDiv {
+    @apply opacity-100 pointer-events-auto;
+  }
+
+  /* ::selection {
+    user-select: none;
+  } */
+}
+
+@tailwind components;
+
+@layer components {
+  .song {
+    @apply bg-secondary-300 dark:bg-primary-800 p-4 rounded-lg flex flex-col gap-1 relative hover:bg-secondary-400 dark:hover:bg-primary-700 cursor-pointer;
+  }
+  .cardPause {
+    @apply bg-accent-500 p-3 rounded-full absolute right-2 bottom-2 opacity-0 transition-all duration-200 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 hover:scale-105;
+  }
+  .cardPlay {
+    @apply bg-accent-500 p-3 rounded-full absolute right-2 bottom-2 transition-all hover:scale-105;
+  }
+  .socialIcon {
+    @apply fill-primary-900 dark:fill-secondary-200 p-3 rounded-full bg-secondary-300 dark:bg-primary-800 hover:bg-secondary-400 dark:hover:bg-primary-700 transition-all;
+  }
+  .songName {
+    @apply mt-2 text-lg font-bold dark:font-medium overflow-hidden text-nowrap text-ellipsis;
+  }
+  .singer {
+    @apply text-sm font-semibold dark:font-medium text-primary-900/60 dark:text-secondary-500 overflow-hidden text-nowrap text-ellipsis;
+  }
+  .artist {
+    @apply text-center flex flex-col items-center gap-1.5 cursor-pointer;
+  }
+}
+
+@tailwind utilities;
+
+@layer utilities {
+  .font-lemonada {
+    font-family: "Lemonada", sans-serif;
+  }
+}
