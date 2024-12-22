@@ -27,6 +27,10 @@
   .volume:hover .volumeDiv {
     @apply opacity-100 pointer-events-auto;
   }
+
+  ::selection {
+    user-select: none;
+  }
 }
 
 @tailwind components;
