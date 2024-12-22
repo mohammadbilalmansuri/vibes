@@ -1,0 +1,21 @@
+{
+  "name": "vibes",
+  "version": "1.0.0",
+  "description": "Vibes is a music streaming platform designed to provide an immersive and user-friendly listening experience. This project was created to practice TypeScript along with JavaScript concepts, featuring a modern design and essential music player functionalities.",
+  "main": "./dist/app.js",
+  "scripts": {
+    "start": "tsc -b && npx tailwindcss -i src/input.css -o dist/output.css"
+  },
+  "keywords": [
+    "vibes",
+    "vibes-music",
+    "streaming-platform",
+    "music player"
+  ],
+  "author": "Mohammad Bilal Mansuri",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  }
+}

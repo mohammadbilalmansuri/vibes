@@ -1,0 +1,4 @@
+node_modules/
+dist/*.js
+dist/tscconfig.tsbuildinfo
+dist/output.css
