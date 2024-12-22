@@ -602,6 +602,17 @@ video {
   opacity: 1;
 }
 
+::-moz-selection {
+  -moz-user-select: none;
+  user-select: none;
+}
+
+::selection {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
 .song {
   position: relative;
   display: flex;
