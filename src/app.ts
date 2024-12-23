@@ -15,11 +15,6 @@ const elements = {
   shuffle: document.querySelector(".shuffle") as HTMLElement,
   loop: document.querySelector(".loop") as HTMLElement,
   loopOnce: document.querySelector(".loopOnce") as HTMLElement,
-  mute: document.querySelector(".mute") as HTMLElement,
-  unmute: document.querySelector(".unmute") as HTMLElement,
-  volumebar: document.querySelector(".volumebar") as HTMLElement,
-  volumebarActive: document.querySelector(".volumebarActive") as HTMLElement,
-  volumebarCircle: document.querySelector(".volumebarCircle") as HTMLElement,
 };
 
 interface Song {
@@ -40,32 +35,24 @@ interface CurrentSong {
   image: string;
   audio: HTMLAudioElement;
   index: number;
-}
-interface AudioStatus {
-  mute: boolean;
   volume: number;
   seekbarWidth: number;
-  volumebarHeight: number;
 }
 enum LoopOptions {
   off,
   infinite,
   once,
 }
-
 let currentSong: CurrentSong = {
   name: "",
   singer: "",
   image: "",
   audio: new Audio(),
   index: -1,
-};
-let audioStatus: AudioStatus = {
-  mute: false,
   volume: 1,
   seekbarWidth: 0,
-  volumebarHeight: 100,
 };
+
 let darkMode = true;
 let shuffle = false;
 let loop = LoopOptions.off;
@@ -74,7 +61,7 @@ let songs: HTMLAudioElement[] = [];
 let currentSongDiv: HTMLElement;
 let currentSongCardPlayBtn: HTMLElement;
 let currentSongCardPauseBtn: HTMLElement;
-let totalIndexes: number[] = [];
+let indexes: number[] = [];
 let shuffleIndexes: number[] = [];
 
 async function fetchSongs(): Promise<void> {
@@ -87,7 +74,7 @@ async function fetchSongs(): Promise<void> {
       songsData.forEach((song, index) => {
         const audio = new Audio(song.url);
         songs.push(audio);
-        totalIndexes.push(index);
+        indexes.push(index);
       });
     }
   } catch (error) {
@@ -156,50 +143,14 @@ function displaySongs(songsToDisplayIndexes: number[]): void {
     togglePlayPause();
   });
 
-  shuffleIndexes = shuffleArray(totalIndexes);
-}
-
-async function playSong(index: number): Promise<void> {
-  currentSong.audio.pause();
-  currentSong = {
-    name: songsData[index].name,
-    singer: songsData[index].singer,
-    image: songsData[index].image,
-    audio: songs[index],
-    index: index,
-  };
-  currentSong.audio.preload = "auto";
-  currentSong.audio.load();
-  currentSong.audio.currentTime = 0;
-  currentSong.audio.volume = audioStatus.volume;
-  currentSong.audio.muted = audioStatus.mute;
-  await currentSong.audio.play();
-
-  currentSongDiv = document.getElementById(
-    `${currentSong.index}`
-  ) as HTMLElement;
-
-  updateUIOnSongPlay();
-
-  currentSong.audio.addEventListener("timeupdate", handleAudioTimeUpdate);
-  elements.seekbar.addEventListener("click", updateSeekbar);
-  elements.seekbar.addEventListener("mousedown", handleSeekbarDrag);
-  currentSong.audio.addEventListener("ended", handleAudioEnd);
+  shuffleIndexes = shuffleArray(indexes);
 }
 
 function updateUIOnSongPlay(): void {
   elements.currentSong.innerHTML = `
-    <img
-      class="h-12 rounded-md"
-      src="${currentSong.image}"
-      alt="${currentSong.name}"
-    />
-    <div>
-      <h4 class="text-md font-bold dark:font-normal">
-        ${currentSong.name}
-      </h4>
-      <p class="text-xs font-bold dark:font-normal text-primary-900/60 dark:text-secondary-500">${currentSong.singer}</p>
-    </div>
+    <img class="w-full rounded-lg" src="${currentSong.image}" alt="${currentSong.name}"/>
+    <h4 class="pt-4 text-xl font-bold dark:font-semibold">${currentSong.name}</h4>
+    <p class="font-semibold dark:font-medium text-primary-900/60 dark:text-secondary-500">${currentSong.singer}</p>
   `;
 
   elements.pause.classList.add("hidden");
@@ -260,6 +211,31 @@ function updateUIOnSongPlay(): void {
   });
 }
 
+async function playSong(index: number): Promise<void> {
+  currentSong.audio.pause();
+  currentSong.name = songsData[index].name;
+  currentSong.singer = songsData[index].singer;
+  currentSong.image = songsData[index].image;
+  currentSong.audio = songs[index];
+  currentSong.index = index;
+  currentSong.audio.preload = "auto";
+  currentSong.audio.load();
+  currentSong.audio.currentTime = 0;
+  currentSong.audio.volume = currentSong.volume;
+  await currentSong.audio.play();
+
+  currentSongDiv = document.getElementById(
+    `${currentSong.index}`
+  ) as HTMLElement;
+
+  updateUIOnSongPlay();
+
+  currentSong.audio.addEventListener("timeupdate", handleAudioTimeUpdate);
+  elements.seekbar.addEventListener("click", updateSeekbar);
+  elements.seekbar.addEventListener("mousedown", handleSeekbarDrag);
+  currentSong.audio.addEventListener("ended", handleAudioEnd);
+}
+
 function togglePlayPause(): void {
   if (currentSong.index >= 0) {
     if (currentSong.audio.paused) {
@@ -315,10 +291,10 @@ const handleAudioTimeUpdate = () => {
     }
     elements.currentTime.textContent = `${currentMinutes}:${currentSeconds}`;
 
-    audioStatus.seekbarWidth =
+    currentSong.seekbarWidth =
       (currentSong.audio.currentTime / currentSong.audio.duration) * 100;
-    elements.seekbarActive.style.width = `${audioStatus.seekbarWidth}%`;
-    elements.seekbarCircle.style.left = `calc(${audioStatus.seekbarWidth}% - 6px)`;
+    elements.seekbarActive.style.width = `${currentSong.seekbarWidth}%`;
+    elements.seekbarCircle.style.left = `calc(${currentSong.seekbarWidth}% - 6px)`;
   }
 };
 
@@ -334,9 +310,9 @@ const updateSeekbar = (e: MouseEvent): void => {
   );
   if (isFinite(newTime)) {
     currentSong.audio.currentTime = newTime;
-    audioStatus.seekbarWidth = (newTime / currentSong.audio.duration) * 100;
-    elements.seekbarActive.style.width = `${audioStatus.seekbarWidth}%`;
-    elements.seekbarCircle.style.left = `calc(${audioStatus.seekbarWidth}% - 6px)`;
+    currentSong.seekbarWidth = (newTime / currentSong.audio.duration) * 100;
+    elements.seekbarActive.style.width = `${currentSong.seekbarWidth}%`;
+    elements.seekbarCircle.style.left = `calc(${currentSong.seekbarWidth}% - 6px)`;
   }
 };
 
@@ -349,40 +325,6 @@ const handleSeekbarDrag = (e: MouseEvent) => {
     }
   };
 
-  const stopDrag = (): void => {
-    isDragging = false;
-    document.removeEventListener("mousemove", onMouseMove);
-    document.removeEventListener("mouseup", stopDrag);
-  };
-
-  document.addEventListener("mousemove", onMouseMove);
-  document.addEventListener("mouseup", stopDrag);
-  e.preventDefault();
-};
-
-const updateVolumeBar = (e: MouseEvent): void => {
-  const volumebarRect = elements.volumebar.getBoundingClientRect();
-  const newVolume = Math.max(
-    0,
-    Math.min(1 - (e.clientY - volumebarRect.top) / volumebarRect.height, 1)
-  );
-
-  if (isFinite(newVolume)) {
-    audioStatus.volume = newVolume;
-    currentSong.audio.volume = audioStatus.volume;
-    audioStatus.volumebarHeight = audioStatus.volume * 100;
-    elements.volumebarActive.style.height = `${audioStatus.volumebarHeight}%`;
-    elements.volumebarCircle.style.bottom = `calc(${audioStatus.volumebarHeight}% - 6px)`;
-  }
-};
-
-const handleVolumeBarDrag = (e: MouseEvent) => {
-  let isDragging = true;
-  const onMouseMove = (event: MouseEvent): void => {
-    if (isDragging) {
-      updateVolumeBar(event);
-    }
-  };
   const stopDrag = (): void => {
     isDragging = false;
     document.removeEventListener("mousemove", onMouseMove);
@@ -412,8 +354,7 @@ const nextSong = (): void => {
       }
     } else {
       if (currentSong.index < songs.length - 1) {
-        currentSong.index =
-          totalIndexes[totalIndexes.indexOf(currentSong.index) + 1];
+        currentSong.index = indexes[indexes.indexOf(currentSong.index) + 1];
         playSong(currentSong.index);
       }
     }
@@ -435,8 +376,7 @@ const previousSong = (): void => {
       }
     } else {
       if (currentSong.index >= 0) {
-        currentSong.index =
-          totalIndexes[totalIndexes.indexOf(currentSong.index) - 1];
+        currentSong.index = indexes[indexes.indexOf(currentSong.index) - 1];
         playSong(currentSong.index);
       }
     }
@@ -469,15 +409,6 @@ const handleLoop = (): void => {
   elements.loopOnce.classList.toggle("hidden", loop !== LoopOptions.once);
   elements.loop.classList.toggle("hidden", loop === LoopOptions.once);
   elements.loop.classList.toggle("hover:fill-accent-500");
-};
-
-const handleMuteToggle = (): void => {
-  audioStatus.mute = !audioStatus.mute;
-  if (currentSong.index >= 0) {
-    currentSong.audio.muted = audioStatus.mute;
-  }
-  elements.mute.classList.toggle("hidden", audioStatus.mute);
-  elements.unmute.classList.toggle("hidden", !audioStatus.mute);
 };
 
 const changeTheme = (isDarkMode: boolean): void => {
@@ -518,6 +449,25 @@ const handleKeyboardEvents = (e: KeyboardEvent) => {
           e.preventDefault();
           nextSong();
           break;
+        case "ArrowUp":
+          e.preventDefault();
+          if (currentSong.audio.volume === 1) return;
+          currentSong.audio.volume = Math.min(
+            1,
+            currentSong.audio.volume + 0.2
+          );
+          console.log(currentSong.audio.volume);
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          if (currentSong.audio.volume === 0) return;
+
+          currentSong.audio.volume = Math.max(
+            0,
+            currentSong.audio.volume - 0.2
+          );
+          console.log(currentSong.audio.volume);
+          break;
       }
     }
   }
@@ -547,10 +497,7 @@ const handleUnload = (): void => {
       image: currentSong.image,
       index: currentSong.index,
       currentTime: currentSong.audio.currentTime,
-      seekbarWidth: audioStatus.seekbarWidth,
-      volume: audioStatus.volume,
-      mute: audioStatus.mute,
-      volumebarHeight: audioStatus.volumebarHeight,
+      seekbarWidth: currentSong.seekbarWidth,
     })
   );
 };
@@ -572,9 +519,6 @@ function handlePlayerEvents(): void {
   elements.shuffle.addEventListener("click", handleShuffle);
   elements.loop.addEventListener("click", handleLoop);
   elements.loopOnce.addEventListener("click", handleLoop);
-  elements.mute.addEventListener("click", handleMuteToggle);
-  elements.unmute.addEventListener("click", handleMuteToggle);
-  elements.volumebar.addEventListener("mousedown", handleVolumeBarDrag);
   window.addEventListener("keydown", handleKeyboardEvents);
   navigator.mediaSession.setActionHandler("pause", togglePlayPause);
   navigator.mediaSession.setActionHandler("play", togglePlayPause);
@@ -585,18 +529,20 @@ function handlePlayerEvents(): void {
 window.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("load", handleLoad);
   window.addEventListener("beforeunload", handleUnload);
+  // window.addEventListener("contextmenu", (e) => e.preventDefault());
+  // window.addEventListener("keydown", (e) => {
+  //   if (e.ctrlKey && e.shiftKey && e.code === "KeyI") e.preventDefault();
+  // });
 
   fetchSongs()
     .then((): void => {
-      displaySongs(totalIndexes);
+      displaySongs(indexes);
       handlePlayerEvents();
     })
     .catch((error) => {
-      elements.songList.classList.remove("grid", "grid-cols-6", "gap-5");
-      const errorUI = document.createElement("h3");
-      errorUI.classList.add("mt-2", "text-xl", "text-accent-500");
+      const errorUI = elements.songList.querySelector("p") as HTMLElement;
+      errorUI.classList.add("text-accent-500");
       errorUI.textContent = "Sorry! Unable to find any song.";
-      elements.songList.appendChild(errorUI);
       console.log("ERROR: Unable to fetch songs.", error);
     });
 });
