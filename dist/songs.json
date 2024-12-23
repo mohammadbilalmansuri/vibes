@@ -1,246 +1,218 @@
-{
-  "songs": [
-    {
-      "name": "Apna Bana Le",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-apna-bana-le.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-apna-bana-le.mp3",
-      "singer": "Arijit Singh & Sachin-Jigar"
-    },
-    {
-      "name": "Chaleya",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-chaleya.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-chaleya.mp3",
-      "singer": "Arijit Singh & Shilpa Rao"
-    },
-    {
-      "name": "Dil Ibaadat",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-dil-ibaadat.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-dil-ibaadat.mp3",
-      "singer": "KK"
-    },
-    {
-      "name": "Ground Shunya",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-hustle03.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-ground-shunya.mp3",
-      "singer": "Bassick & Uday"
-    },
-    {
-      "name": "Haath Varthi",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-haath-varthi.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-haath-varthi.mp3",
-      "singer": "MC Stan"
-    },
-    {
-      "name": "I Guess",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-i-guess.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-i-guess.mp3",
-      "singer": "KR$NA"
-    },
-    {
-      "name": "Jaan Nissar",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-kedarnath.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-jaan-nisaar.mp3",
-      "singer": "Arijit Singh"
-    },
-    {
-      "name": "Joota Japani",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-joota-japani.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-joota-japani.mp3",
-      "singer": "KR$NA"
-    },
-    {
-      "name": "Kanta Laga",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-kanta-laga.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-kanta-laga.mp3",
-      "singer": "Tony Kakkar, Neha Kakkar & Yo Yo Honey Singh"
-    },
-    {
-      "name": "Kesariya",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-kesariya.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-kesariya.mp3",
-      "singer": "Arijit Singh"
-    },
-    {
-      "name": "Khatta Flow",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-khatta-flow.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-khatta-flow.mp3",
-      "singer": "Seedhe Maut & KR$NA"
-    },
-    {
-      "name": "Legends",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-legends.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-legends.mp3",
-      "singer": "King"
-    },
-    {
-      "name": "Leke Prabhu Ka Naam",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-leke-prabhu-ka-naam.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-leke-prabhu-ka-naam.mp3",
-      "singer": "Arijit Singh & Nikhita Gandhi"
-    },
-    {
-      "name": "Maan Meri Jaan",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-maan-meri-jaan.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-maan-meri-jaan.mp3",
-      "singer": "King"
-    },
-    {
-      "name": "Makhna",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-makhna.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-makhna.mp3",
-      "singer": "Yo Yo Honey Singh, Neha Kakkar, Singhsta, Pinaki, Sean & Allistair"
-    },
-    {
-      "name": "Mirchi",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-mirchi.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-mirchi.mp3",
-      "singer": "DIVINE, MC Altaf, Phenom & Stylo G"
-    },
-    {
-      "name": "Nasamajh",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-hustle03.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-nasamajh.mp3",
-      "singer": "Uday"
-    },
-    {
-      "name": "No Cap",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-no-cap.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-no-cap.mp3",
-      "singer": "KR$NA"
-    },
-    {
-      "name": "Nusta Paisa",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-nusta-paisa.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-nusta-paisa.mp3",
-      "singer": "MC Stan"
-    },
-    {
-      "name": "Oops",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-oops.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-oops.mp3",
-      "singer": "King"
-    },
-    {
-      "name": "Pal",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-pal.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-pal.mp3",
-      "singer": "Arijit Singh & Shreya Ghoshal"
-    },
-    {
-      "name": "Phir Mohabbat",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-phir-mohabbat.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-phir-mohabbat.mp3",
-      "singer": "Mohd Irfan, Arijit Singh & SAIM BHAT"
-    },
-    {
-      "name": "Qaafirana",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-kedarnath.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-qaafirana.mp3",
-      "singer": "Arijit Singh & Nikhita Gandhi"
-    },
-    {
-      "name": "Shayad",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-shayad.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-shayad.mp3",
-      "singer": "Arijit Singh"
-    },
-    {
-      "name": "Shikayat",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-shikayat.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-shikayat.mp3",
-      "singer": "AUR"
-    },
-    {
-      "name": "Tera Yaar Hu Main",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-tera-yaar-hu-main.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-tera-yaar-hu-main.mp3",
-      "singer": "Arijit Singh"
-    },
-    {
-      "name": "Tere Pyaar Mein",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-tere-pyaar-mein.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-tere-pyaar-mein.mp3",
-      "singer": "Arijit Singh & Nikhita Gandhi"
-    },
-    {
-      "name": "Tu Aake Dekhle",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-tu-aake-dekhle.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-tu-aake-dekhle.mp3",
-      "singer": "King"
-    },
-    {
-      "name": "Tu Hain Kahan",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-tu-hai-kahan.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-tu-hai-kahan.mp3",
-      "singer": "AUR & ZAYN"
-    },
-    {
-      "name": "Ve Kamleya",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-ve-kamleya.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-ve-kamleya.mp3",
-      "singer": "Arijit Singh, Shreya Ghoshal, Shadab Faridi & Altamash Faridi"
-    },
-    {
-      "name": "Woh Raat",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-woh-raat.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-woh-raat.mp3",
-      "singer": "Raftaar & KR$NA"
-    },
-    {
-      "name": "WOH",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-woh.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-woh.mp3",
-      "singer": "Ikka, Dino James & Badshah"
-    },
-    {
-      "name": "Ykwim",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-ykwim.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-ykwim.mp3",
-      "singer": "Karan Aujla, KR$NA & Mehar Vaani"
-    },
-    {
-      "name": "Zihaal-E-Miskin",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-zihaal-e-miskin.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-zihaal-e-miskin.mp3",
-      "singer": "Vishal Mishra & Shreya Ghoshal"
-    },
-    {
-      "name": "Zindagi Kuch To Bata (Repeise)",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-zindagi-kuch-to-bata.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-zindagi-kuch-to-bata.mp3",
-      "singer": "Jubin Nautiyal & Pritam"
-    },
-    {
-      "name": "3:59 AM",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-3-59AM.webp",
-      "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-3-59AM.mp3",
-      "singer": "DIVINE"
-    }
-  ],
-  "artists": [
-    {
-      "name": "Arijit Singh",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734849563/vibes/artists-arijit-singh.webp"
-    },
-    {
-      "name": "KR$NA",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734849567/vibes/artists-krsna.webp"
-    },
-    {
-      "name": "King",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734849563/vibes/artists-king.webp"
-    },
-    {
-      "name": "Honey Singh",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734849563/vibes/artists-honey-singh.webp"
-    },
-    {
-      "name": "AUR",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734849563/vibes/artists-aur.webp"
-    },
-    {
-      "name": "MC Stan",
-      "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734849567/vibes/artists-mc-stan.webp"
-    }
-  ]
-}
+[
+  {
+    "name": "Apna Bana Le",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-apna-bana-le.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-apna-bana-le.mp3",
+    "singer": "Arijit Singh & Sachin-Jigar"
+  },
+  {
+    "name": "Chaleya",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-chaleya.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-chaleya.mp3",
+    "singer": "Arijit Singh & Shilpa Rao"
+  },
+  {
+    "name": "Dil Ibaadat",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-dil-ibaadat.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-dil-ibaadat.mp3",
+    "singer": "KK"
+  },
+  {
+    "name": "Ground Shunya",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-hustle03.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-ground-shunya.mp3",
+    "singer": "Bassick & Uday"
+  },
+  {
+    "name": "Haath Varthi",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-haath-varthi.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-haath-varthi.mp3",
+    "singer": "MC Stan"
+  },
+  {
+    "name": "I Guess",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-i-guess.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-i-guess.mp3",
+    "singer": "KR$NA"
+  },
+  {
+    "name": "Jaan Nissar",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-kedarnath.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-jaan-nisaar.mp3",
+    "singer": "Arijit Singh"
+  },
+  {
+    "name": "Joota Japani",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-joota-japani.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-joota-japani.mp3",
+    "singer": "KR$NA"
+  },
+  {
+    "name": "Kanta Laga",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-kanta-laga.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-kanta-laga.mp3",
+    "singer": "Tony Kakkar, Neha Kakkar & Yo Yo Honey Singh"
+  },
+  {
+    "name": "Kesariya",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-kesariya.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-kesariya.mp3",
+    "singer": "Arijit Singh"
+  },
+  {
+    "name": "Khatta Flow",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-khatta-flow.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-khatta-flow.mp3",
+    "singer": "Seedhe Maut & KR$NA"
+  },
+  {
+    "name": "Legends",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-legends.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-legends.mp3",
+    "singer": "King"
+  },
+  {
+    "name": "Leke Prabhu Ka Naam",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-leke-prabhu-ka-naam.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-leke-prabhu-ka-naam.mp3",
+    "singer": "Arijit Singh & Nikhita Gandhi"
+  },
+  {
+    "name": "Maan Meri Jaan",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-maan-meri-jaan.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-maan-meri-jaan.mp3",
+    "singer": "King"
+  },
+  {
+    "name": "Makhna",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-makhna.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-makhna.mp3",
+    "singer": "Yo Yo Honey Singh, Neha Kakkar, Singhsta, Pinaki, Sean & Allistair"
+  },
+  {
+    "name": "Mirchi",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-mirchi.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-mirchi.mp3",
+    "singer": "DIVINE, MC Altaf, Phenom & Stylo G"
+  },
+  {
+    "name": "Nasamajh",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-hustle03.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-nasamajh.mp3",
+    "singer": "Uday"
+  },
+  {
+    "name": "No Cap",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-no-cap.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-no-cap.mp3",
+    "singer": "KR$NA"
+  },
+  {
+    "name": "Nusta Paisa",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-nusta-paisa.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-nusta-paisa.mp3",
+    "singer": "MC Stan"
+  },
+  {
+    "name": "Oops",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-oops.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-oops.mp3",
+    "singer": "King"
+  },
+  {
+    "name": "Pal",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-pal.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-pal.mp3",
+    "singer": "Arijit Singh & Shreya Ghoshal"
+  },
+  {
+    "name": "Phir Mohabbat",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-phir-mohabbat.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-phir-mohabbat.mp3",
+    "singer": "Mohd Irfan, Arijit Singh & SAIM BHAT"
+  },
+  {
+    "name": "Qaafirana",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-kedarnath.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-qaafirana.mp3",
+    "singer": "Arijit Singh & Nikhita Gandhi"
+  },
+  {
+    "name": "Shayad",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-shayad.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-shayad.mp3",
+    "singer": "Arijit Singh"
+  },
+  {
+    "name": "Shikayat",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-shikayat.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-shikayat.mp3",
+    "singer": "AUR"
+  },
+  {
+    "name": "Tera Yaar Hu Main",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-tera-yaar-hu-main.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-tera-yaar-hu-main.mp3",
+    "singer": "Arijit Singh"
+  },
+  {
+    "name": "Tere Pyaar Mein",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-tere-pyaar-mein.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-tere-pyaar-mein.mp3",
+    "singer": "Arijit Singh & Nikhita Gandhi"
+  },
+  {
+    "name": "Tu Aake Dekhle",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-tu-aake-dekhle.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-tu-aake-dekhle.mp3",
+    "singer": "King"
+  },
+  {
+    "name": "Tu Hain Kahan",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-tu-hai-kahan.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-tu-hai-kahan.mp3",
+    "singer": "AUR & ZAYN"
+  },
+  {
+    "name": "Ve Kamleya",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-ve-kamleya.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-ve-kamleya.mp3",
+    "singer": "Arijit Singh, Shreya Ghoshal, Shadab Faridi & Altamash Faridi"
+  },
+  {
+    "name": "Woh Raat",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-woh-raat.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-woh-raat.mp3",
+    "singer": "Raftaar & KR$NA"
+  },
+  {
+    "name": "WOH",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-woh.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-woh.mp3",
+    "singer": "Ikka, Dino James & Badshah"
+  },
+  {
+    "name": "Ykwim",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-ykwim.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-ykwim.mp3",
+    "singer": "Karan Aujla, KR$NA & Mehar Vaani"
+  },
+  {
+    "name": "Zihaal-E-Miskin",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-zihaal-e-miskin.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-zihaal-e-miskin.mp3",
+    "singer": "Vishal Mishra & Shreya Ghoshal"
+  },
+  {
+    "name": "Zindagi Kuch To Bata (Repeise)",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-zindagi-kuch-to-bata.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-zindagi-kuch-to-bata.mp3",
+    "singer": "Jubin Nautiyal & Pritam"
+  },
+  {
+    "name": "3:59 AM",
+    "image": "https://res.cloudinary.com/mohammadbilalmansuri/image/upload/v1734850206/vibes/thumbnail-3-59AM.webp",
+    "url": "https://res.cloudinary.com/mohammadbilalmansuri/video/upload/v1734849102/vibes/songs/song-3-59AM.mp3",
+    "singer": "DIVINE"
+  }
+]

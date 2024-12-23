@@ -1,5 +1,6 @@
 const elements = {
   root: document.documentElement as HTMLElement,
+  themeBtn: document.getElementById("theme-btn") as HTMLElement,
   songList: document.querySelector(".songList") as HTMLElement,
   currentSong: document.querySelector(".currentSong") as HTMLElement,
   pause: document.querySelector(".pause") as HTMLElement,
@@ -19,12 +20,6 @@ const elements = {
   volumebar: document.querySelector(".volumebar") as HTMLElement,
   volumebarActive: document.querySelector(".volumebarActive") as HTMLElement,
   volumebarCircle: document.querySelector(".volumebarCircle") as HTMLElement,
-  addToPlaylist: document.querySelector(".addToPlaylist") as HTMLElement,
-  lightModeBtn: document.querySelector(".lightModeBtn") as HTMLElement,
-  darkModeBtn: document.querySelector(".darkModeBtn") as HTMLElement,
-  artists: document.querySelector(".artists") as HTMLElement,
-  homeInactive: document.querySelector(".homeInactive") as HTMLElement,
-  homeActive: document.querySelector(".homeActive") as HTMLElement,
 };
 
 interface Song {
@@ -38,11 +33,6 @@ interface LoadedSong {
   singer: string;
   image: string;
   audio: HTMLAudioElement;
-}
-interface Artist {
-  name: string;
-  image: string;
-  songs: Song[];
 }
 interface CurrentSong {
   name: string;
@@ -81,96 +71,18 @@ let shuffle = false;
 let loop = LoopOptions.off;
 let songsData: Song[] = [];
 let songs: HTMLAudioElement[] = [];
-let artists: Artist[] = [];
 let currentSongDiv: HTMLElement;
 let currentSongCardPlayBtn: HTMLElement;
 let currentSongCardPauseBtn: HTMLElement;
 let totalIndexes: number[] = [];
 let shuffleIndexes: number[] = [];
-let userPlaylist: Map<string, LoadedSong> = new Map();
-let filteredIndexes: number[] = [];
-let playingSongTabIndexes: number[] = [];
-
-window.addEventListener("DOMContentLoaded", () => {
-  window.addEventListener("load", handleLoad);
-  window.addEventListener("beforeunload", handleUnload);
-
-  fetchSongs()
-    .then((): void => {
-      filteredIndexes = totalIndexes;
-      playingSongTabIndexes = totalIndexes;
-      displaySongs(filteredIndexes);
-      displayArtists();
-      handlePlayerEvents();
-    })
-    .catch((error) => {
-      elements.songList.classList.remove("grid", "grid-cols-6", "gap-5");
-      const errorUI = document.createElement("h3");
-      errorUI.classList.add("mt-2", "text-xl", "text-accent-500");
-      errorUI.textContent = "Sorry! Unable to find any song.";
-      elements.songList.appendChild(errorUI);
-      console.log("ERROR: Unable to fetch songs.", error);
-    });
-});
-
-function handlePlayerEvents(): void {
-  elements.songList.addEventListener("click", (event: MouseEvent) => {
-    const target = event.target as HTMLElement;
-    const songDiv = target.closest(".song") as HTMLDivElement;
-    songDiv && playSong(parseInt(songDiv.id));
-  });
-
-  elements.artists.addEventListener("click", (event: MouseEvent) => {
-    const target = event.target as HTMLElement;
-    const artistDiv = target.closest(".artist") as HTMLDivElement;
-    if (artistDiv) {
-      if (currentSong.index >= 0) {
-        playingSongTabIndexes = filteredIndexes;
-      }
-      filterSongs(artistDiv.id);
-      displaySongs(filteredIndexes);
-      elements.homeActive.classList.add("hidden");
-      elements.homeInactive.classList.remove("hidden");
-    }
-  });
-
-  elements.homeInactive.addEventListener("click", () => {
-    if (currentSong.index >= 0) {
-      playingSongTabIndexes = filteredIndexes;
-    }
-    filteredIndexes = totalIndexes;
-    displaySongs(filteredIndexes);
-    elements.homeInactive.classList.add("hidden");
-    elements.homeActive.classList.remove("hidden");
-  });
-
-  elements.darkModeBtn.addEventListener("click", toggleTheme);
-  elements.lightModeBtn.addEventListener("click", toggleTheme);
-  elements.play.addEventListener("click", togglePlayPause);
-  elements.pause.addEventListener("click", togglePlayPause);
-  elements.previous.addEventListener("click", previousSong);
-  elements.next.addEventListener("click", nextSong);
-  elements.shuffle.addEventListener("click", handleShuffle);
-  elements.loop.addEventListener("click", handleLoop);
-  elements.loopOnce.addEventListener("click", handleLoop);
-  elements.mute.addEventListener("click", handleMuteToggle);
-  elements.unmute.addEventListener("click", handleMuteToggle);
-  elements.volumebar.addEventListener("mousedown", handleVolumeBarDrag);
-  window.addEventListener("keydown", handleKeyboardEvents);
-  elements.addToPlaylist.addEventListener("click", handleAddToPlaylist);
-  navigator.mediaSession.setActionHandler("pause", togglePlayPause);
-  navigator.mediaSession.setActionHandler("play", togglePlayPause);
-  navigator.mediaSession.setActionHandler("previoustrack", previousSong);
-  navigator.mediaSession.setActionHandler("nexttrack", nextSong);
-}
 
 async function fetchSongs(): Promise<void> {
   try {
     const response = await fetch("./songs.json");
     const data = await response.json();
     if (data) {
-      songsData = data.songs;
-      artists = data.artists;
+      songsData = data;
 
       songsData.forEach((song, index) => {
         const audio = new Audio(song.url);
@@ -181,17 +93,6 @@ async function fetchSongs(): Promise<void> {
   } catch (error) {
     throw error;
   }
-}
-
-function filterSongs(artist: string): void {
-  filteredIndexes = [];
-  songsData.filter((song, index) => {
-    const searchString = artist.replace("-", " ");
-    const isSinger = song.singer.toLowerCase().includes(searchString);
-    if (isSinger) {
-      filteredIndexes.push(index);
-    }
-  });
 }
 
 function displaySongs(songsToDisplayIndexes: number[]): void {
@@ -255,26 +156,7 @@ function displaySongs(songsToDisplayIndexes: number[]): void {
     togglePlayPause();
   });
 
-  shuffleIndexes = shuffleArray(playingSongTabIndexes);
-}
-
-function displayArtists(): void {
-  const fragment = document.createDocumentFragment();
-  artists.forEach((artist) => {
-    const artistDiv = document.createElement("div");
-    artistDiv.classList.add("artist", "group");
-    artistDiv.id = artist.name.toLowerCase().replace(/[ ]/, "-");
-    artistDiv.innerHTML = `
-      <img
-        class="rounded-full aspect-square w-3/4 object-cover object-top group-hover:scale-105 transition-all"
-        src="${artist.image}"
-        alt="${artist.name}"
-      />
-      <p class="text-xs font-medium dark:font-normal">${artist.name}</p>
-    `;
-    fragment.appendChild(artistDiv);
-  });
-  elements.artists.replaceChildren(fragment);
+  shuffleIndexes = shuffleArray(totalIndexes);
 }
 
 async function playSong(index: number): Promise<void> {
@@ -299,7 +181,6 @@ async function playSong(index: number): Promise<void> {
 
   updateUIOnSongPlay();
 
-  playingSongTabIndexes = filteredIndexes;
   currentSong.audio.addEventListener("timeupdate", handleAudioTimeUpdate);
   elements.seekbar.addEventListener("click", updateSeekbar);
   elements.seekbar.addEventListener("mousedown", handleSeekbarDrag);
@@ -324,7 +205,6 @@ function updateUIOnSongPlay(): void {
   elements.pause.classList.add("hidden");
   elements.play.classList.remove("hidden");
   document.title = `${currentSong.name} • ${currentSong.singer}`;
-  elements.addToPlaylist.classList.remove("hidden");
 
   if (!shuffle) {
     elements.previous.classList.toggle("opacity-50", currentSong.index === 0);
@@ -516,7 +396,6 @@ const handleVolumeBarDrag = (e: MouseEvent) => {
 
 const nextSong = (): void => {
   if (currentSong.index >= 0) {
-    const researvedIndexes = playingSongTabIndexes;
     if (shuffle) {
       if (
         shuffleIndexes.indexOf(currentSong.index) ===
@@ -527,25 +406,15 @@ const nextSong = (): void => {
           randomIndex === currentSong.index
             ? Math.floor(Math.random() * shuffleIndexes.length)
             : randomIndex;
-        playSong(randomIndex).then(() => {
-          playingSongTabIndexes = researvedIndexes;
-        });
+        playSong(randomIndex);
       } else {
-        playSong(
-          shuffleIndexes[shuffleIndexes.indexOf(currentSong.index) + 1]
-        ).then(() => {
-          playingSongTabIndexes = researvedIndexes;
-        });
+        playSong(shuffleIndexes[shuffleIndexes.indexOf(currentSong.index) + 1]);
       }
     } else {
       if (currentSong.index < songs.length - 1) {
         currentSong.index =
-          playingSongTabIndexes[
-            playingSongTabIndexes.indexOf(currentSong.index) + 1
-          ];
-        playSong(currentSong.index).then(() => {
-          playingSongTabIndexes = researvedIndexes;
-        });
+          totalIndexes[totalIndexes.indexOf(currentSong.index) + 1];
+        playSong(currentSong.index);
       }
     }
   }
@@ -553,7 +422,6 @@ const nextSong = (): void => {
 
 const previousSong = (): void => {
   if (currentSong.index >= 0) {
-    const researvedIndexes = playingSongTabIndexes;
     if (shuffle) {
       if (shuffleIndexes.indexOf(currentSong.index) === 0) {
         let randomIndex = Math.floor(Math.random() * shuffleIndexes.length);
@@ -561,23 +429,15 @@ const previousSong = (): void => {
           randomIndex === currentSong.index
             ? Math.floor(Math.random() * shuffleIndexes.length)
             : randomIndex;
-        playSong(randomIndex).then(() => {
-          playingSongTabIndexes = researvedIndexes;
-        });
+        playSong(randomIndex);
       } else {
-        playSong(
-          shuffleIndexes[shuffleIndexes.indexOf(currentSong.index) - 1]
-        ).then(() => {
-          playingSongTabIndexes = researvedIndexes;
-        });
+        playSong(shuffleIndexes[shuffleIndexes.indexOf(currentSong.index) - 1]);
       }
     } else {
       if (currentSong.index >= 0) {
         currentSong.index =
-          playingSongTabIndexes[
-            playingSongTabIndexes.indexOf(currentSong.index) - 1
-          ];
-        playSong(currentSong.index).then(() => {});
+          totalIndexes[totalIndexes.indexOf(currentSong.index) - 1];
+        playSong(currentSong.index);
       }
     }
   }
@@ -620,11 +480,13 @@ const handleMuteToggle = (): void => {
   elements.unmute.classList.toggle("hidden", !audioStatus.mute);
 };
 
-const toggleTheme = (): void => {
-  elements.root.classList.toggle("dark");
-  elements.darkModeBtn.classList.toggle("hidden");
-  elements.lightModeBtn.classList.toggle("hidden");
-  darkMode = !darkMode;
+const changeTheme = (isDarkMode: boolean): void => {
+  elements.root.classList.toggle("dark", isDarkMode);
+  elements.themeBtn.innerHTML = isDarkMode
+    ? `<svg viewBox="0 0 24 24" class="size-5"><path d="m17.715 15.15.95.316a1 1 0 0 0-1.445-1.185l.495.869ZM9 6.035l.846.534a1 1 0 0 0-1.14-1.49L9 6.035Zm8.221 8.246a5.47 5.47 0 0 1-2.72.718v2a7.47 7.47 0 0 0 3.71-.98l-.99-1.738Zm-2.72.718A5.5 5.5 0 0 1 9 9.5H7a7.5 7.5 0 0 0 7.5 7.5v-2ZM9 9.5c0-1.079.31-2.082.845-2.93L8.153 5.5A7.47 7.47 0 0 0 7 9.5h2Zm-4 3.368C5 10.089 6.815 7.75 9.292 6.99L8.706 5.08C5.397 6.094 3 9.201 3 12.867h2Zm6.042 6.136C7.718 19.003 5 16.268 5 12.867H3c0 4.48 3.588 8.136 8.042 8.136v-2Zm5.725-4.17c-.81 2.433-3.074 4.17-5.725 4.17v2c3.552 0 6.553-2.327 7.622-5.537l-1.897-.632Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M17 3a1 1 0 0 1 1 1 2 2 0 0 0 2 2 1 1 0 1 1 0 2 2 2 0 0 0-2 2 1 1 0 1 1-2 0 2 2 0 0 0-2-2 1 1 0 1 1 0-2 2 2 0 0 0 2-2 1 1 0 0 1 1-1Z"/></svg>`
+    : `<svg class="size-5 stroke-primary-800 dark:stroke-secondary-200" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836"/></svg>`;
+  darkMode = isDarkMode;
+  localStorage.setItem("darkMode", String(isDarkMode));
 };
 
 function shuffleArray(arrayToShuffle: number[]): number[] {
@@ -635,16 +497,6 @@ function shuffleArray(arrayToShuffle: number[]): number[] {
   }
   return array;
 }
-
-const handleAddToPlaylist = () => {
-  const songIdentifier = `${currentSong.name}-${currentSong.singer}`;
-
-  if (!userPlaylist.has(songIdentifier)) {
-    userPlaylist.set(songIdentifier, currentSong);
-  }
-
-  console.log(userPlaylist);
-};
 
 const handleKeyboardEvents = (e: KeyboardEvent) => {
   if (currentSong.index >= 0) {
@@ -674,36 +526,19 @@ const handleKeyboardEvents = (e: KeyboardEvent) => {
 const handleLoad = (): void => {
   const storedDarkMode = localStorage.getItem("darkMode");
 
-  storedDarkMode
-    ? (darkMode = storedDarkMode === "true")
-    : (darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-  elements.root.classList.toggle("dark", darkMode);
-  darkMode
-    ? elements.darkModeBtn.classList.remove("hidden")
-    : elements.lightModeBtn.classList.remove("hidden");
+  changeTheme(
+    storedDarkMode
+      ? storedDarkMode === "true"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches
+  );
 
   const storedSongData = localStorage.getItem("leftedSong");
   if (storedSongData) {
     const leftedSongData = JSON.parse(storedSongData);
   }
-
-  const storedUserPlaylist = localStorage.getItem("userPlaylist");
-  if (storedUserPlaylist) {
-    const userPlaylistArray: [string, LoadedSong][] =
-      JSON.parse(storedUserPlaylist);
-    userPlaylist = new Map(userPlaylistArray);
-  }
 };
 
 const handleUnload = (): void => {
-  localStorage.setItem("darkMode", darkMode.toString());
-
-  const userPlaylistArray: [string, LoadedSong][] = Array.from(
-    userPlaylist.entries()
-  );
-  localStorage.setItem("userPlaylist", JSON.stringify(userPlaylistArray));
-
   localStorage.setItem(
     "leftedSong",
     JSON.stringify({
@@ -719,3 +554,49 @@ const handleUnload = (): void => {
     })
   );
 };
+
+function handlePlayerEvents(): void {
+  elements.songList.addEventListener("click", (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    const songDiv = target.closest(".song") as HTMLDivElement;
+    songDiv && playSong(parseInt(songDiv.id));
+  });
+
+  elements.themeBtn.addEventListener("click", () => {
+    changeTheme(!darkMode);
+  });
+  elements.play.addEventListener("click", togglePlayPause);
+  elements.pause.addEventListener("click", togglePlayPause);
+  elements.previous.addEventListener("click", previousSong);
+  elements.next.addEventListener("click", nextSong);
+  elements.shuffle.addEventListener("click", handleShuffle);
+  elements.loop.addEventListener("click", handleLoop);
+  elements.loopOnce.addEventListener("click", handleLoop);
+  elements.mute.addEventListener("click", handleMuteToggle);
+  elements.unmute.addEventListener("click", handleMuteToggle);
+  elements.volumebar.addEventListener("mousedown", handleVolumeBarDrag);
+  window.addEventListener("keydown", handleKeyboardEvents);
+  navigator.mediaSession.setActionHandler("pause", togglePlayPause);
+  navigator.mediaSession.setActionHandler("play", togglePlayPause);
+  navigator.mediaSession.setActionHandler("previoustrack", previousSong);
+  navigator.mediaSession.setActionHandler("nexttrack", nextSong);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener("load", handleLoad);
+  window.addEventListener("beforeunload", handleUnload);
+
+  fetchSongs()
+    .then((): void => {
+      displaySongs(totalIndexes);
+      handlePlayerEvents();
+    })
+    .catch((error) => {
+      elements.songList.classList.remove("grid", "grid-cols-6", "gap-5");
+      const errorUI = document.createElement("h3");
+      errorUI.classList.add("mt-2", "text-xl", "text-accent-500");
+      errorUI.textContent = "Sorry! Unable to find any song.";
+      elements.songList.appendChild(errorUI);
+      console.log("ERROR: Unable to fetch songs.", error);
+    });
+});
