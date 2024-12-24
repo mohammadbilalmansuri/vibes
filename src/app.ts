@@ -144,10 +144,10 @@ function changePlayPauseIcons(play: boolean) {
 
 function renderCurrentSong(playing = true): void {
   elements.currentSong.innerHTML = `
-    <img class="size-12 rounded-lg" src="${currentSong.image}" alt="${currentSong.name}"/>
+    <img class="sm:size-12 size-10 sm:rounded-lg rounded-md" src="${currentSong.image}" alt="${currentSong.name}"/>
     <div class="flex flex-col">
-      <h4 class="font-bold dark:font-semibold">${currentSong.name}</h4>
-      <p class="text-sm font-semibold dark:font-medium text-primary-800/60 dark:text-secondary-500">${currentSong.singer}</p>
+      <h4 class="songName">${currentSong.name}</h4>
+      <p class="singer">${currentSong.singer}</p>
     </div>
   `;
 
@@ -160,17 +160,16 @@ function renderCurrentSong(playing = true): void {
         button
       );
     });
-
-    currentSongBtn = currentSongDiv.querySelector(".songIcon") as HTMLElement;
-
-    changePlayPauseIcons(true);
-    document.title = `${currentSong.name} • ${currentSong.singer}`;
-
-    currentSongBtn.addEventListener("click", (e: MouseEvent) => {
-      e.stopPropagation();
-      togglePlayPause();
-    });
   }
+
+  currentSongBtn = currentSongDiv.querySelector(".songIcon") as HTMLElement;
+  changePlayPauseIcons(playing);
+  document.title = `${currentSong.name} • ${currentSong.singer}`;
+
+  currentSongBtn.addEventListener("click", (e: MouseEvent) => {
+    e.stopPropagation();
+    togglePlayPause();
+  });
 
   if (!shuffle) {
     elements.previous.classList.toggle("opacity-50", currentSong.index === 0);

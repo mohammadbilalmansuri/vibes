@@ -111,10 +111,10 @@ function changePlayPauseIcons(play) {
 }
 function renderCurrentSong(playing = true) {
     elements.currentSong.innerHTML = `
-    <img class="size-12 rounded-lg" src="${currentSong.image}" alt="${currentSong.name}"/>
+    <img class="sm:size-12 size-10 sm:rounded-lg rounded-md" src="${currentSong.image}" alt="${currentSong.name}"/>
     <div class="flex flex-col">
-      <h4 class="font-bold dark:font-semibold">${currentSong.name}</h4>
-      <p class="text-sm font-semibold dark:font-medium text-primary-800/60 dark:text-secondary-500">${currentSong.singer}</p>
+      <h4 class="songName">${currentSong.name}</h4>
+      <p class="singer">${currentSong.singer}</p>
     </div>
   `;
     if (playing) {
@@ -123,14 +123,14 @@ function renderCurrentSong(playing = true) {
             button.classList.remove("playingSongIcon");
             button.parentNode?.replaceChild(button.cloneNode(true), button);
         });
-        currentSongBtn = currentSongDiv.querySelector(".songIcon");
-        changePlayPauseIcons(true);
-        document.title = `${currentSong.name} • ${currentSong.singer}`;
-        currentSongBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            togglePlayPause();
-        });
     }
+    currentSongBtn = currentSongDiv.querySelector(".songIcon");
+    changePlayPauseIcons(playing);
+    document.title = `${currentSong.name} • ${currentSong.singer}`;
+    currentSongBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        togglePlayPause();
+    });
     if (!shuffle) {
         elements.previous.classList.toggle("opacity-50", currentSong.index === 0);
         elements.previous.classList.toggle("pointer-events-none", currentSong.index === 0);
