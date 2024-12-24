@@ -71,17 +71,19 @@ async function fetchSongs(): Promise<void> {
     }[] = await response.json();
 
     if (data) {
-      data.forEach((songData, index) => {
-        const song = {
-          name: songData.name,
-          singer: songData.singer,
-          image: songData.image,
-          url: songData.url,
-          audio: new Audio(songData.url),
-        };
-        songs.set(index, song);
-        indexes.push(index);
-      });
+      data
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach((songData, index) => {
+          const song = {
+            name: songData.name,
+            singer: songData.singer,
+            image: songData.image,
+            url: songData.url,
+            audio: new Audio(songData.url),
+          };
+          songs.set(index, song);
+          indexes.push(index);
+        });
     }
   } catch (error) {
     throw error;
@@ -96,8 +98,8 @@ function displaySongs(): void {
     songDiv.classList.add("song", "group");
     songDiv.id = index.toString();
     songDiv.innerHTML = `
-      <div class="w-full flex items-center gap-4">
-        <img class="size-16 rounded-lg" src="${image}" alt="${name}"/>
+      <div class="w-full flex items-center xl:gap-4 gap-2.5">
+        <img class="md:size-16 size-12 lg:rounded-lg rounded" src="${image}" alt="${name}"/>
         <div>
           <h3 class="songName">${name}</h3>
           <p class="singer">${singer}</p>
@@ -144,7 +146,7 @@ function changePlayPauseIcons(play: boolean) {
 
 function renderCurrentSong(playing = true): void {
   elements.currentSong.innerHTML = `
-    <img class="sm:size-12 size-10 sm:rounded-lg rounded-md" src="${currentSong.image}" alt="${currentSong.name}"/>
+    <img class="lg:size-12 size-10 lg:rounded-lg rounded" src="${currentSong.image}" alt="${currentSong.name}"/>
     <div class="flex flex-col">
       <h4 class="songName">${currentSong.name}</h4>
       <p class="singer">${currentSong.singer}</p>

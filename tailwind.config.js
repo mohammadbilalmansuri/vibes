@@ -25,7 +25,6 @@ module.exports = {
       accent: "#f3506c",
     },
     screens: {
-      xs: "480px",
       sm: "680px",
       md: "880px",
       lg: "1080px",

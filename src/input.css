@@ -10,7 +10,7 @@
   }
 
   ::-webkit-scrollbar {
-    @apply w-2;
+    @apply lg:w-2 w-1;
   }
 
   ::-webkit-scrollbar-track {
@@ -42,7 +42,7 @@
   }
 
   .song {
-    @apply bg-secondary-300 dark:bg-primary-800 lg:p-4 p-2.5 rounded-xl flex items-center justify-between lg:gap-4 gap-2.5 relative cursor-pointer hover:translate-x-1.5 transition-transform;
+    @apply bg-secondary-300 dark:bg-primary-800 lg:p-4 p-2.5 lg:rounded-xl rounded-lg flex items-center justify-between lg:gap-4 gap-2.5 relative cursor-pointer xl:hover:translate-x-1.5 hover:translate-x-1 transition-transform;
   }
 
   .songIcon {
@@ -54,7 +54,7 @@
   }
 
   .songName {
-    @apply md:text-lg text-base font-semibold dark:font-normal;
+    @apply md:text-lg text-sm font-semibold dark:font-normal;
   }
 
   .singer {
