@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./dist/**/*.{html,js}"],
   darkMode: "class",
   theme: {
@@ -25,6 +25,7 @@ module.exports = {
       accent: "#f3506c",
     },
     screens: {
+      xs: "480px",
       sm: "680px",
       md: "880px",
       lg: "1080px",
