@@ -2,19 +2,17 @@ const elements = {
   root: document.documentElement as HTMLElement,
   themeBtn: document.getElementById("theme-btn") as HTMLElement,
   songs: document.getElementById("songs") as HTMLElement,
-  currentSong: document.querySelector(".currentSong") as HTMLElement,
-  pause: document.querySelector(".pause") as HTMLElement,
-  play: document.querySelector(".play") as HTMLElement,
-  previous: document.querySelector(".previous") as HTMLElement,
-  next: document.querySelector(".next") as HTMLElement,
-  currentTime: document.querySelector(".currentTime") as HTMLElement,
-  duration: document.querySelector(".duration") as HTMLElement,
-  seekbar: document.querySelector(".seekbar") as HTMLElement,
-  seekbarCircle: document.querySelector(".seekbarCircle") as HTMLElement,
-  seekbarActive: document.querySelector(".seekbarActive") as HTMLElement,
-  shuffle: document.querySelector(".shuffle") as HTMLElement,
-  loop: document.querySelector(".loop") as HTMLElement,
-  loopOnce: document.querySelector(".loopOnce") as HTMLElement,
+  currentSong: document.getElementById("currentSong") as HTMLElement,
+  playPause: document.getElementById("play-pause") as HTMLElement,
+  previous: document.getElementById("previous") as HTMLElement,
+  next: document.getElementById("next") as HTMLElement,
+  shuffle: document.getElementById("shuffle") as HTMLElement,
+  loop: document.getElementById("loop") as HTMLElement,
+  currentTime: document.getElementById("currentTime") as HTMLElement,
+  duration: document.getElementById("duration") as HTMLElement,
+  seekbar: document.getElementById("seekbar") as HTMLElement,
+  seekbarCircle: document.getElementById("seekbarCircle") as HTMLElement,
+  seekbarActive: document.getElementById("seekbarActive") as HTMLElement,
 };
 
 interface Song {
@@ -58,15 +56,14 @@ let shuffle = false;
 let loop = LoopOptions.off;
 let songs = new Map<number, Song>();
 let currentSongDiv: HTMLElement;
-let currentSongCardPlayBtn: HTMLElement;
-let currentSongCardPauseBtn: HTMLElement;
+let currentSongBtn: HTMLElement;
 let indexes: number[] = [];
 let shuffleIndexes: number[] = [];
 
 async function fetchSongs(): Promise<void> {
   try {
     const response = await fetch("./songs.json");
-    const data: {
+    let data: {
       name: string;
       singer: string;
       image: string;
@@ -99,25 +96,20 @@ function displaySongs(): void {
     songDiv.classList.add("song", "group");
     songDiv.id = index.toString();
     songDiv.innerHTML = `
-      <div class="relative w-full">
-       <button class="cardPause">
-         <svg viewBox="0 0 16 16" class="fill-primary-900 w-5 h-5">
-           <path
-             d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z"
-           ></path>
-         </svg>
-       </button>
-       <button class="cardPlay hidden">
-         <svg viewBox="0 0 16 16" class="fill-primary-900 w-5 h-5">
-           <path
-             d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"
-           ></path>
-         </svg>
-       </button>
-       <img class="rounded-lg aspect-square" src="${image}" alt="${name}"/>
+      <div class="w-full flex items-center gap-4">
+        <img class="size-16 rounded-lg" src="${image}" alt="${name}"/>
+        <div>
+          <h3 class="songName">${name}</h3>
+          <p class="singer">${singer}</p>
+        </div>
       </div>
-      <h3 class="songName">${name}</h3>
-      <p class="singer">${singer}</p>
+      <button class="songIcon">
+        <svg viewBox="0 0 16 16" class="size-4 fill-primary-800 dark:fill-secondary-200">
+          <path
+            d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z"
+          />
+        </svg>
+      </button>
     `;
     fragment.appendChild(songDiv);
   });
@@ -125,17 +117,59 @@ function displaySongs(): void {
   shuffleIndexes = shuffleArray(indexes);
 }
 
+function renderPlayPauseIcon(play: boolean, size: number) {
+  return `<svg viewBox="0 0 16 16" class="size-${size}"><path d="${
+    play
+      ? "M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"
+      : "M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z"
+  }"/></svg>`;
+}
+
+function renderLoopIcon(loop: LoopOptions) {
+  switch (loop) {
+    case LoopOptions.once:
+      return `<svg viewBox="0 0 16 16" class="size-4 fill-accent"><path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h.75v1.5h-.75A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5zM12.25 2.5h-.75V1h.75A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25z"/><path d="M9.12 8V1H7.787c-.128.72-.76 1.293-1.787 1.313V3.36h1.57V8h1.55z"/></svg>`;
+    case LoopOptions.infinite:
+      return `<svg viewBox="0 0 16 16" class="size-4 fill-accent"><path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h8.5A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25h-8.5A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5z"/></svg>`;
+    case LoopOptions.off:
+      return `<svg viewBox="0 0 16 16" class="size-4 fill-primary-800 dark:fill-secondary-200"><path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h8.5A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25h-8.5A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5z"/></svg>`;
+  }
+}
+
+function changePlayPauseIcons(play: boolean) {
+  elements.playPause.innerHTML = renderPlayPauseIcon(play, 5);
+  currentSongBtn.innerHTML = renderPlayPauseIcon(play, 4);
+  currentSongBtn.classList.toggle("playingSongIcon", play);
+}
+
 function renderCurrentSong(playing = true): void {
   elements.currentSong.innerHTML = `
-    <img class="w-full rounded-lg" src="${currentSong.image}" alt="${currentSong.name}"/>
-    <h4 class="pt-4 text-xl font-bold dark:font-semibold">${currentSong.name}</h4>
-    <p class="font-semibold dark:font-medium text-primary-900/60 dark:text-secondary-500">${currentSong.singer}</p>
+    <img class="size-12 rounded-lg" src="${currentSong.image}" alt="${currentSong.name}"/>
+    <div class="flex flex-col">
+      <h4 class="font-bold dark:font-semibold">${currentSong.name}</h4>
+      <p class="text-sm font-semibold dark:font-medium text-primary-800/60 dark:text-secondary-500">${currentSong.singer}</p>
+    </div>
   `;
 
   if (playing) {
-    elements.pause.classList.add("hidden");
-    elements.play.classList.remove("hidden");
+    elements.songs.querySelectorAll(".songIcon").forEach((button) => {
+      button.innerHTML = renderPlayPauseIcon(false, 4);
+      button.classList.remove("playingSongIcon");
+      button.parentNode?.replaceChild(
+        button.cloneNode(true) as HTMLElement,
+        button
+      );
+    });
+
+    currentSongBtn = currentSongDiv.querySelector(".songIcon") as HTMLElement;
+
+    changePlayPauseIcons(true);
     document.title = `${currentSong.name} • ${currentSong.singer}`;
+
+    currentSongBtn.addEventListener("click", (e: MouseEvent) => {
+      e.stopPropagation();
+      togglePlayPause();
+    });
   }
 
   if (!shuffle) {
@@ -153,45 +187,22 @@ function renderCurrentSong(playing = true): void {
       currentSong.index === songs.size - 1
     );
   }
+}
 
-  elements.songs.querySelectorAll(".cardPlay")!.forEach((button) => {
-    button.classList.add("hidden");
-    button.parentNode?.replaceChild(
-      button.cloneNode(true) as HTMLElement,
-      button
-    );
-  });
-
-  elements.songs.querySelectorAll(".cardPause")!.forEach((button) => {
-    button.classList.remove("hidden");
-    button.parentNode?.replaceChild(
-      button.cloneNode(true) as HTMLElement,
-      button
-    );
-  });
-
-  currentSongCardPlayBtn = currentSongDiv?.querySelector(
-    ".cardPlay"
-  ) as HTMLElement;
-
-  currentSongCardPauseBtn = currentSongDiv?.querySelector(
-    ".cardPause"
-  ) as HTMLElement;
-
-  if (playing) {
-    currentSongCardPlayBtn?.classList.remove("hidden");
-    currentSongCardPauseBtn?.classList.add("hidden");
+async function togglePlayPause(): Promise<void> {
+  if (currentSong.index >= 0) {
+    if (currentSong.audio.paused) {
+      try {
+        await currentSong.audio.play();
+        changePlayPauseIcons(true);
+      } catch (error) {
+        console.error("Error playing audio:", error);
+      }
+    } else {
+      currentSong.audio.pause();
+      changePlayPauseIcons(false);
+    }
   }
-
-  currentSongCardPlayBtn?.addEventListener("click", (e: MouseEvent) => {
-    e.stopPropagation();
-    togglePlayPause();
-  });
-
-  currentSongCardPauseBtn?.addEventListener("click", (e: MouseEvent) => {
-    e.stopPropagation();
-    togglePlayPause();
-  });
 }
 
 async function playSong(index: number, play = true): Promise<void> {
@@ -229,37 +240,15 @@ async function playSong(index: number, play = true): Promise<void> {
   currentSong.audio.addEventListener("ended", handleAudioEnd);
 }
 
-function togglePlayPause(): void {
-  if (currentSong.index >= 0) {
-    if (currentSong.audio.paused) {
-      currentSong.audio.play();
-      elements.pause.classList.add("hidden");
-      elements.play.classList.remove("hidden");
-      currentSongCardPauseBtn.classList.add("hidden");
-      currentSongCardPlayBtn.classList.remove("hidden");
-    } else {
-      currentSong.audio.pause();
-      elements.play.classList.add("hidden");
-      elements.pause.classList.remove("hidden");
-      currentSongCardPlayBtn.classList.add("hidden");
-      currentSongCardPauseBtn.classList.remove("hidden");
-    }
-  }
-}
-
 const handleAudioEnd = (): void => {
   if (loop === LoopOptions.infinite) {
     playSong(currentSong.index);
   } else if (loop === LoopOptions.once) {
     loop = LoopOptions.off;
     playSong(currentSong.index);
-    elements.loopOnce.classList.add("hidden");
-    elements.loop.classList.remove("hidden");
+    elements.loop.innerHTML = renderLoopIcon(loop);
   } else if (!shuffle && currentSong.index === songs.size - 1) {
-    elements.play.classList.add("hidden");
-    elements.pause.classList.remove("hidden");
-    currentSongCardPlayBtn.classList.add("hidden");
-    currentSongCardPauseBtn.classList.remove("hidden");
+    changePlayPauseIcons(false);
   } else {
     nextSong();
   }
@@ -378,30 +367,11 @@ const previousSong = (): void => {
 
 const handleShuffle = (): void => {
   shuffle = !shuffle;
-  elements.shuffle.classList.toggle("fill-accent-500", shuffle);
-  elements.shuffle.classList.toggle("fill-primary-900", !shuffle);
+  elements.shuffle.classList.toggle("fill-accent", shuffle);
+  elements.shuffle.classList.toggle("fill-primary-800", !shuffle);
   elements.shuffle.classList.toggle("dark:fill-secondary-200", !shuffle);
   elements.previous.classList.remove("opacity-50", "pointer-events-none");
   elements.next.classList.remove("opacity-50", "pointer-events-none");
-};
-
-const handleLoop = (): void => {
-  loop = (loop + 1) % 3;
-  elements.loop.classList.toggle(
-    "fill-accent-500",
-    loop === LoopOptions.infinite
-  );
-  elements.loop.classList.toggle(
-    "fill-primary-900",
-    loop !== LoopOptions.infinite
-  );
-  elements.loop.classList.toggle(
-    "dark:fill-secondary-200",
-    loop !== LoopOptions.infinite
-  );
-  elements.loopOnce.classList.toggle("hidden", loop !== LoopOptions.once);
-  elements.loop.classList.toggle("hidden", loop === LoopOptions.once);
-  elements.loop.classList.toggle("hover:fill-accent-500");
 };
 
 const changeTheme = (isDarkMode: boolean): void => {
@@ -474,13 +444,14 @@ function handlePlayerEvents(): void {
   elements.themeBtn.addEventListener("click", () => {
     changeTheme(!darkMode);
   });
-  elements.play.addEventListener("click", togglePlayPause);
-  elements.pause.addEventListener("click", togglePlayPause);
+  elements.playPause.addEventListener("click", togglePlayPause);
   elements.previous.addEventListener("click", previousSong);
   elements.next.addEventListener("click", nextSong);
   elements.shuffle.addEventListener("click", handleShuffle);
-  elements.loop.addEventListener("click", handleLoop);
-  elements.loopOnce.addEventListener("click", handleLoop);
+  elements.loop.addEventListener("click", () => {
+    loop = (loop + 1) % 3;
+    elements.loop.innerHTML = renderLoopIcon(loop);
+  });
   window.addEventListener("keydown", handleKeyboardEvents);
   navigator.mediaSession.setActionHandler("pause", togglePlayPause);
   navigator.mediaSession.setActionHandler("play", togglePlayPause);
@@ -507,12 +478,22 @@ window.addEventListener("DOMContentLoaded", () => {
     .then((): void => {
       displaySongs();
       handlePlayerEvents();
-      if (currentSong.index !== -1) playSong(currentSong.index, false);
+      if (currentSong.index >= 0) {
+        playSong(currentSong.index, false);
+      }
     })
     .catch((error) => {
-      const errorUI = elements.songs.querySelector("p") as HTMLElement;
-      errorUI.classList.add("text-accent-500");
-      errorUI.textContent = "Sorry! Unable to find any song.";
-      console.log("ERROR: Unable to fetch songs.", error);
+      const errorUI = document.createElement("p");
+      errorUI.classList.add(
+        "text-lg",
+        "h-full",
+        "flex",
+        "items-center",
+        "justify-center",
+        "animate-pulse"
+      );
+      errorUI.textContent = "Sorry! Unable to find any song";
+      elements.songs.replaceWith(errorUI);
+      console.log("Error while fetching songs", error);
     });
 });

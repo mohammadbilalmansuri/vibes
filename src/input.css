@@ -37,26 +37,32 @@
 @tailwind components;
 
 @layer components {
+  .skeleton {
+    @apply bg-secondary-300 dark:bg-primary-800 rounded-lg animate-pulse h-20;
+  }
+
   .song {
-    @apply bg-secondary-300 dark:bg-primary-800 p-4 rounded-lg flex flex-col relative hover:bg-secondary-400 dark:hover:bg-primary-700 cursor-pointer text-center;
+    @apply bg-secondary-300 dark:bg-primary-800 p-4 rounded-xl flex items-center justify-between gap-4 relative cursor-pointer hover:translate-x-1.5 transition-transform;
   }
-  .cardPause {
-    @apply bg-accent-500 p-3 rounded-full absolute right-2 bottom-2 opacity-0 transition-all duration-200 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 hover:scale-105;
+
+  .songIcon {
+    @apply bg-secondary-400 dark:bg-primary-700 p-2.5 rounded-full hover:scale-105 active:scale-95 fill-primary-800 dark:fill-secondary-200;
   }
-  .cardPlay {
-    @apply bg-accent-500 p-3 rounded-full absolute right-2 bottom-2 transition-all hover:scale-105;
+
+  .playingSongIcon {
+    @apply fill-accent dark:fill-accent;
   }
-  .socialIcon {
-    @apply fill-primary-900 dark:fill-secondary-200 p-3 rounded-full bg-secondary-300 dark:bg-primary-800 hover:bg-secondary-400 dark:hover:bg-primary-700 transition-all;
+
+  .icon {
+    @apply size-9 flex items-center justify-center fill-primary-800 dark:fill-secondary-200 rounded-full bg-secondary-300 dark:bg-primary-800 hover:bg-secondary-400 dark:hover:bg-primary-700 transition-all active:scale-95;
   }
+
   .songName {
-    @apply pt-3 text-lg font-bold dark:font-medium overflow-hidden text-nowrap text-ellipsis;
+    @apply text-lg font-semibold dark:font-normal;
   }
+
   .singer {
-    @apply text-sm font-semibold dark:font-medium text-primary-900/60 dark:text-secondary-500 overflow-hidden text-nowrap text-ellipsis;
-  }
-  .artist {
-    @apply text-center flex flex-col items-center gap-1.5 cursor-pointer;
+    @apply text-sm font-semibold dark:font-medium text-primary-900/60 dark:text-secondary-500;
   }
 }
 
