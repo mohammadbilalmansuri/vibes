@@ -204,19 +204,6 @@
     elements.seekbar.addEventListener("touchstart", handleSeekbarDrag);
     currentSong.audio.addEventListener("ended", handleAudioEnd);
   }
-  const handleAudioEnd = () => {
-    if (loop === LoopOptions.infinite) {
-      playSong(currentSong.index);
-    } else if (loop === LoopOptions.once) {
-      loop = LoopOptions.off;
-      playSong(currentSong.index);
-      elements.loop.innerHTML = renderLoopIcon(loop);
-    } else if (!shuffle && currentSong.index === songs.size - 1) {
-      changePlayPauseIcons(false);
-    } else {
-      nextSong();
-    }
-  };
   const handleAudioTimeUpdate = () => {
     if (isFinite(currentSong.audio.duration)) {
       const durationMinutes = Math.floor(currentSong.audio.duration / 60);
@@ -256,18 +243,37 @@
   };
   const handleSeekbarDrag = (e) => {
     let isDragging = true;
+    let newTime = 0;
     e.preventDefault();
+    currentSong.audio.removeEventListener("timeupdate", handleAudioTimeUpdate);
     const onMove = (event) => {
       if (isDragging && currentSong.index >= 0) {
         const clientX =
           event instanceof MouseEvent
             ? event.clientX
             : event.touches[0].clientX;
-        updateSeekbar(clientX);
+        const seekbarRect = elements.seekbar.getBoundingClientRect();
+        newTime = Math.max(
+          0,
+          Math.min(
+            ((clientX - seekbarRect.left) / seekbarRect.width) *
+              currentSong.audio.duration,
+            currentSong.audio.duration
+          )
+        );
+        if (isFinite(newTime)) {
+          const seekbarWidth = (newTime / currentSong.audio.duration) * 100;
+          elements.seekbarActive.style.width = `${seekbarWidth}%`;
+          elements.seekbarCircle.style.left = `calc(${seekbarWidth}% - 6px)`;
+        }
       }
     };
     const stopDrag = () => {
       isDragging = false;
+      if (isFinite(newTime)) {
+        currentSong.audio.currentTime = newTime;
+      }
+      currentSong.audio.addEventListener("timeupdate", handleAudioTimeUpdate);
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseup", stopDrag);
       document.removeEventListener("touchmove", onMove);
@@ -277,6 +283,19 @@
     document.addEventListener("mouseup", stopDrag);
     document.addEventListener("touchmove", onMove);
     document.addEventListener("touchend", stopDrag);
+  };
+  const handleAudioEnd = () => {
+    if (loop === LoopOptions.infinite) {
+      playSong(currentSong.index);
+    } else if (loop === LoopOptions.once) {
+      loop = LoopOptions.off;
+      playSong(currentSong.index);
+      elements.loop.innerHTML = renderLoopIcon(loop);
+    } else if (!shuffle && currentSong.index === songs.size - 1) {
+      changePlayPauseIcons(false);
+    } else {
+      nextSong();
+    }
   };
   const nextSong = () => {
     if (currentSong.index >= 0) {
