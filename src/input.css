@@ -34,7 +34,7 @@
 
 @layer components {
   .icon {
-    @apply size-8 lg:size-9 flex items-center justify-center fill-primary-800 dark:fill-secondary-200 rounded-full bg-secondary-300 dark:bg-primary-800 hover:bg-secondary-400 dark:hover:bg-primary-700 transition-all active:scale-95;
+    @apply size-8 lg:size-9 flex items-center justify-center fill-primary-800 dark:fill-secondary-200 rounded-full bg-secondary-300 dark:bg-primary-800 transition-transform hover:scale-105 active:scale-95;
   }
 
   .skeleton {

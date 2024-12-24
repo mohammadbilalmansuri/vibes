@@ -416,6 +416,7 @@
   }
 
   const handleKeyboardEvents = (e: KeyboardEvent) => {
+    if (e.ctrlKey && e.shiftKey && e.code === "KeyI") e.preventDefault();
     if (currentSong.index >= 0) {
       const activeElement = document.activeElement;
       const isInputField =
@@ -475,15 +476,12 @@
       loop = (loop + 1) % 3;
       elements.loop.innerHTML = renderLoopIcon(loop);
     });
+    window.addEventListener("contextmenu", (e) => e.preventDefault());
     window.addEventListener("keydown", handleKeyboardEvents);
     navigator.mediaSession.setActionHandler("pause", togglePlayPause);
     navigator.mediaSession.setActionHandler("play", togglePlayPause);
     navigator.mediaSession.setActionHandler("previoustrack", previousSong);
     navigator.mediaSession.setActionHandler("nexttrack", nextSong);
-    window.addEventListener("contextmenu", (e) => e.preventDefault());
-    window.addEventListener("keydown", (e) => {
-      if (e.ctrlKey && e.shiftKey && e.code === "KeyI") e.preventDefault();
-    });
   }
 
   window.addEventListener("DOMContentLoaded", () => {
