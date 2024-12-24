@@ -250,52 +250,6 @@
     currentSong.audio.addEventListener("ended", handleAudioEnd);
   }
 
-  const handleSeekbarDrag = (e: MouseEvent | TouchEvent) => {
-    let isDragging = true;
-    e.preventDefault();
-
-    const onMove = (event: MouseEvent | TouchEvent): void => {
-      if (isDragging && currentSong.index >= 0) {
-        const clientX =
-          event instanceof MouseEvent
-            ? event.clientX
-            : event.touches[0].clientX;
-        updateSeekbar(clientX);
-      }
-    };
-
-    const stopDrag = (): void => {
-      isDragging = false;
-      document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseup", stopDrag);
-      document.removeEventListener("touchmove", onMove);
-      document.removeEventListener("touchend", stopDrag);
-    };
-
-    document.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseup", stopDrag);
-    document.addEventListener("touchmove", onMove);
-    document.addEventListener("touchend", stopDrag);
-  };
-
-  const updateSeekbar = (clientX: number): void => {
-    const seekbarRect = elements.seekbar.getBoundingClientRect();
-    const newTime = Math.max(
-      0,
-      Math.min(
-        ((clientX - seekbarRect.left) / seekbarRect.width) *
-          currentSong.audio.duration,
-        currentSong.audio.duration
-      )
-    );
-    if (isFinite(newTime)) {
-      currentSong.audio.currentTime = newTime;
-      currentSong.seekbarWidth = (newTime / currentSong.audio.duration) * 100;
-      elements.seekbarActive.style.width = `${currentSong.seekbarWidth}%`;
-      elements.seekbarCircle.style.left = `calc(${currentSong.seekbarWidth}% - 6px)`;
-    }
-  };
-
   const handleAudioEnd = (): void => {
     if (loop === LoopOptions.infinite) {
       playSong(currentSong.index);
@@ -335,6 +289,52 @@
       elements.seekbarActive.style.width = `${currentSong.seekbarWidth}%`;
       elements.seekbarCircle.style.left = `calc(${currentSong.seekbarWidth}% - 6px)`;
     }
+  };
+
+  const updateSeekbar = (clientX: number): void => {
+    const seekbarRect = elements.seekbar.getBoundingClientRect();
+    const newTime = Math.max(
+      0,
+      Math.min(
+        ((clientX - seekbarRect.left) / seekbarRect.width) *
+          currentSong.audio.duration,
+        currentSong.audio.duration
+      )
+    );
+    if (isFinite(newTime)) {
+      currentSong.audio.currentTime = newTime;
+      currentSong.seekbarWidth = (newTime / currentSong.audio.duration) * 100;
+      elements.seekbarActive.style.width = `${currentSong.seekbarWidth}%`;
+      elements.seekbarCircle.style.left = `calc(${currentSong.seekbarWidth}% - 6px)`;
+    }
+  };
+
+  const handleSeekbarDrag = (e: MouseEvent | TouchEvent) => {
+    let isDragging = true;
+    e.preventDefault();
+
+    const onMove = (event: MouseEvent | TouchEvent): void => {
+      if (isDragging && currentSong.index >= 0) {
+        const clientX =
+          event instanceof MouseEvent
+            ? event.clientX
+            : event.touches[0].clientX;
+        updateSeekbar(clientX);
+      }
+    };
+
+    const stopDrag = (): void => {
+      isDragging = false;
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup", stopDrag);
+      document.removeEventListener("touchmove", onMove);
+      document.removeEventListener("touchend", stopDrag);
+    };
+
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", stopDrag);
+    document.addEventListener("touchmove", onMove);
+    document.addEventListener("touchend", stopDrag);
   };
 
   const nextSong = (): void => {
