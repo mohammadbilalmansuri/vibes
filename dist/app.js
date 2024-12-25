@@ -371,7 +371,6 @@
     return array;
   }
   const handleKeyboardEvents = (e) => {
-    if (e.ctrlKey && e.shiftKey && e.code === "KeyI") e.preventDefault();
     if (currentSong.index >= 0) {
       const activeElement = document.activeElement;
       const isInputField =
@@ -430,7 +429,6 @@
       loop = (loop + 1) % 3;
       elements.loop.innerHTML = renderLoopIcon(loop);
     });
-    window.addEventListener("contextmenu", (e) => e.preventDefault());
     window.addEventListener("keydown", handleKeyboardEvents);
     navigator.mediaSession.setActionHandler("pause", togglePlayPause);
     navigator.mediaSession.setActionHandler("play", togglePlayPause);
