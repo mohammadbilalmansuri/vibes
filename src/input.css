@@ -70,11 +70,11 @@
   }
 
   .songName {
-    @apply md:text-lg text-sm font-semibold dark:font-normal cursor-default;
+    @apply md:text-lg text-sm font-semibold dark:font-normal;
   }
 
   .singer {
-    @apply md:text-sm text-xs font-semibold dark:font-medium text-primary-900/60 dark:text-secondary-500 cursor-default;
+    @apply md:text-sm text-xs font-semibold dark:font-medium text-primary-900/60 dark:text-secondary-500;
   }
 }
 

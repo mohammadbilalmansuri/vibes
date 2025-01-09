@@ -151,8 +151,8 @@
     elements.currentSong.innerHTML = `
         <img class="lg:size-12 sm:size-10 size-8 lg:rounded-lg rounded" src="${currentSong.image}" alt="${currentSong.name}"/>
         <div class="flex flex-col">
-          <h4 class="songName">${currentSong.name}</h4>
-          <p class="singer">${currentSong.singer}</p>
+          <h4 class="songName cursor-default">${currentSong.name}</h4>
+          <p class="singer cursor-default">${currentSong.singer}</p>
         </div>
       `;
 
