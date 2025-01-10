@@ -2,7 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lemonada:wght@300..700&display=swap");
 
 @tailwind base;
-
 @layer base {
   * {
     box-sizing: border-box;
@@ -18,11 +17,11 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-secondary-400 dark:bg-primary-700 rounded-xl;
+    @apply bg-secondary-200 dark:bg-primary-800 rounded-xl;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-secondary-500 dark:bg-primary-600;
+    @apply bg-secondary-300 dark:bg-primary-700;
   }
 
   ::selection {
@@ -31,38 +30,37 @@
 }
 
 @tailwind components;
-
 @layer components {
   .icon {
-    @apply size-8 lg:size-9 flex items-center justify-center fill-primary-800 dark:fill-secondary-200 rounded-full bg-secondary-300 dark:bg-primary-800 transition-transform hover:scale-105 active:scale-95;
+    @apply size-8 lg:size-9 flex items-center justify-center fill-primary-800 dark:fill-secondary-200 rounded-full bg-secondary-200 dark:bg-primary-800 transition-transform hover:scale-105 active:scale-95;
   }
 
   .skeleton {
-    @apply bg-secondary-300 dark:bg-primary-800 lg:rounded-xl rounded-lg animate-pulse lg:p-4 p-2.5 md:h-20 h-16 flex items-center justify-between;
+    @apply bg-secondary-200 dark:bg-primary-800 lg:rounded-xl rounded-lg lg:p-4 p-2.5 lg:h-24 md:h-[5.25rem] h-[4.25rem] flex items-center justify-between animate-pulse;
   }
 
   .skeleton-img {
-    @apply md:size-16 size-12 lg:rounded-lg rounded bg-secondary-400 dark:bg-primary-700;
+    @apply md:size-16 size-12 lg:rounded-lg rounded bg-secondary-300 dark:bg-primary-700;
   }
 
   .skeleton-title {
-    @apply md:w-28 w-24 h-4 rounded-md bg-secondary-400 dark:bg-primary-700;
+    @apply md:w-28 w-24 h-4 rounded-md bg-secondary-300 dark:bg-primary-700;
   }
 
   .skeleton-text {
-    @apply md:w-24 w-20 h-4 rounded-md bg-secondary-400 dark:bg-primary-700;
+    @apply md:w-24 w-20 h-4 rounded-md bg-secondary-300 dark:bg-primary-700;
   }
 
   .skeleton-icon {
-    @apply md:size-9 size-8 rounded-full bg-secondary-400 dark:bg-primary-700;
+    @apply md:size-9 size-8 rounded-full bg-secondary-300 dark:bg-primary-700;
   }
 
   .song {
-    @apply bg-secondary-300 dark:bg-primary-800 lg:p-4 p-2.5 lg:rounded-xl rounded-lg flex items-center justify-between lg:gap-4 gap-2.5 relative cursor-pointer xl:hover:translate-x-1.5 hover:translate-x-1 transition-transform;
+    @apply bg-secondary-200 dark:bg-primary-800 lg:p-4 p-2.5 lg:rounded-xl rounded-lg relative flex items-center justify-between lg:gap-4 gap-2.5 cursor-pointer xl:hover:translate-x-1.5 hover:translate-x-1 transition-transform;
   }
 
   .songIcon {
-    @apply bg-secondary-400 dark:bg-primary-700 p-2.5 rounded-full hover:scale-105 active:scale-95 fill-primary-800 dark:fill-secondary-200;
+    @apply bg-secondary-300 dark:bg-primary-700 p-2.5 rounded-full hover:scale-105 active:scale-95 fill-primary-800 dark:fill-secondary-200;
   }
 
   .playingSongIcon {
@@ -74,12 +72,11 @@
   }
 
   .singer {
-    @apply md:text-sm text-xs font-semibold dark:font-medium text-primary-900/60 dark:text-secondary-500;
+    @apply md:text-sm text-xs font-semibold dark:font-medium text-primary-800/60 dark:text-secondary-500;
   }
 }
 
 @tailwind utilities;
-
 @layer utilities {
   .font-lemonada {
     font-family: "Lemonada", sans-serif;
