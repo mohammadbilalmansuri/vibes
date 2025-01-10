@@ -38,8 +38,15 @@
   let songs = new Map();
   let currentSongDiv;
   let currentSongBtn;
-  let indexes = [];
   let shuffleIndexes = [];
+  function shuffleArray(arrayToShuffle) {
+    const array = arrayToShuffle.slice();
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
   async function fetchSongs() {
     try {
       const response = await fetch("./songs.json");
@@ -56,7 +63,6 @@
               audio: new Audio(songData.url),
             };
             songs.set(index, song);
-            indexes.push(index);
           });
       }
     } catch (error) {
@@ -89,7 +95,7 @@
       fragment.appendChild(songDiv);
     });
     elements.songs.replaceChildren(fragment);
-    shuffleIndexes = shuffleArray(indexes);
+    shuffleIndexes = shuffleArray(Array.from(songs.keys()));
   }
   function renderPlayPauseIcon(play, isPlayerBtn) {
     return `<svg viewBox="0 0 16 16" class="${
@@ -317,7 +323,7 @@
         }
       } else {
         if (currentSong.index < songs.size - 1) {
-          currentSong.index = indexes[indexes.indexOf(currentSong.index) + 1];
+          currentSong.index += 1;
           playSong(currentSong.index);
         }
       }
@@ -340,7 +346,7 @@
         }
       } else {
         if (currentSong.index >= 0) {
-          currentSong.index = indexes[indexes.indexOf(currentSong.index) - 1];
+          currentSong.index -= 1;
           playSong(currentSong.index);
         }
       }
@@ -351,8 +357,12 @@
     elements.shuffle.classList.toggle("fill-accent", shuffle);
     elements.shuffle.classList.toggle("fill-primary-800", !shuffle);
     elements.shuffle.classList.toggle("dark:fill-secondary-200", !shuffle);
-    elements.previous.classList.remove("opacity-50", "pointer-events-none");
-    elements.next.classList.remove("opacity-50", "pointer-events-none");
+    const updateBtn = (btn, condition) => {
+      btn.classList.toggle("opacity-50", condition);
+      btn.classList.toggle("pointer-events-none", condition);
+    };
+    currentSong.index === 0 && updateBtn(elements.previous, !shuffle);
+    currentSong.index === songs.size - 1 && updateBtn(elements.next, !shuffle);
   };
   const changeTheme = (isDarkMode) => {
     elements.root.classList.toggle("dark", isDarkMode);
@@ -362,14 +372,6 @@
     darkMode = isDarkMode;
     localStorage.setItem("darkMode", String(isDarkMode));
   };
-  function shuffleArray(arrayToShuffle) {
-    const array = arrayToShuffle.slice();
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
   const handleKeyboardEvents = (e) => {
     if (currentSong.index >= 0) {
       const activeElement = document.activeElement;

@@ -58,8 +58,16 @@
   let songs = new Map<number, Song>();
   let currentSongDiv: HTMLElement;
   let currentSongBtn: HTMLElement;
-  let indexes: number[] = [];
   let shuffleIndexes: number[] = [];
+
+  function shuffleArray(arrayToShuffle: number[]): number[] {
+    const array = arrayToShuffle.slice();
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
 
   async function fetchSongs(): Promise<void> {
     try {
@@ -83,7 +91,6 @@
               audio: new Audio(songData.url),
             };
             songs.set(index, song);
-            indexes.push(index);
           });
       }
     } catch (error) {
@@ -117,7 +124,7 @@
       fragment.appendChild(songDiv);
     });
     elements.songs.replaceChildren(fragment);
-    shuffleIndexes = shuffleArray(indexes);
+    shuffleIndexes = shuffleArray(Array.from(songs.keys()));
   }
 
   function renderPlayPauseIcon(play: boolean, isPlayerBtn: boolean) {
@@ -377,7 +384,7 @@
         }
       } else {
         if (currentSong.index < songs.size - 1) {
-          currentSong.index = indexes[indexes.indexOf(currentSong.index) + 1];
+          currentSong.index += 1;
           playSong(currentSong.index);
         }
       }
@@ -401,7 +408,7 @@
         }
       } else {
         if (currentSong.index >= 0) {
-          currentSong.index = indexes[indexes.indexOf(currentSong.index) - 1];
+          currentSong.index -= 1;
           playSong(currentSong.index);
         }
       }
@@ -413,8 +420,14 @@
     elements.shuffle.classList.toggle("fill-accent", shuffle);
     elements.shuffle.classList.toggle("fill-primary-800", !shuffle);
     elements.shuffle.classList.toggle("dark:fill-secondary-200", !shuffle);
-    elements.previous.classList.remove("opacity-50", "pointer-events-none");
-    elements.next.classList.remove("opacity-50", "pointer-events-none");
+
+    const updateBtn = (btn: HTMLElement, condition: boolean): void => {
+      btn.classList.toggle("opacity-50", condition);
+      btn.classList.toggle("pointer-events-none", condition);
+    };
+
+    currentSong.index === 0 && updateBtn(elements.previous, !shuffle);
+    currentSong.index === songs.size - 1 && updateBtn(elements.next, !shuffle);
   };
 
   const changeTheme = (isDarkMode: boolean): void => {
@@ -425,15 +438,6 @@
     darkMode = isDarkMode;
     localStorage.setItem("darkMode", String(isDarkMode));
   };
-
-  function shuffleArray(arrayToShuffle: number[]): number[] {
-    const array = arrayToShuffle.slice();
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
 
   const handleKeyboardEvents = (e: KeyboardEvent) => {
     if (currentSong.index >= 0) {
