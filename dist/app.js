@@ -36,17 +36,11 @@
   let shuffle = false;
   let loop = LoopOptions.off;
   let songs = new Map();
+  let cachedAudios = new Map();
   let currentSongDiv;
   let currentSongBtn;
   let shuffleIndexes = [];
-  function shuffleArray(arrayToShuffle) {
-    const array = arrayToShuffle.slice();
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
+  let isPlayingSong = false;
   async function fetchSongs() {
     try {
       const response = await fetch("./songs.json");
@@ -60,7 +54,6 @@
               singer: songData.singer,
               image: songData.image,
               url: songData.url,
-              audio: new Audio(songData.url),
             };
             songs.set(index, song);
           });
@@ -68,6 +61,14 @@
     } catch (error) {
       throw error;
     }
+  }
+  function shuffleArray(arrayToShuffle) {
+    const array = arrayToShuffle.slice();
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
   function displaySongs() {
     const fragment = document.createDocumentFragment();
@@ -174,42 +175,6 @@
       }
     }
   }
-  async function playSong(index, play = true) {
-    currentSong.audio.pause();
-    const song = songs.get(index);
-    if (!song) return;
-    currentSong = {
-      ...currentSong,
-      name: song.name,
-      singer: song.singer,
-      image: song.image,
-      url: song.url,
-      audio: song.audio,
-      index: index,
-    };
-    currentSong.audio.preload = "auto";
-    currentSong.audio.load();
-    currentSong.audio.currentTime = 0;
-    currentSong.audio.volume = currentSong.volume;
-    currentSongDiv = document.getElementById(`${index}`);
-    if (play) {
-      await currentSong.audio.play();
-      renderCurrentSong();
-      localStorage.setItem("currentSongIndex", index.toString());
-    } else {
-      renderCurrentSong(false);
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      handleAudioTimeUpdate();
-    }
-    currentSong.audio.addEventListener("timeupdate", handleAudioTimeUpdate);
-    elements.seekbar.addEventListener("click", (e) => {
-      e.preventDefault();
-      updateSeekbar(e.clientX);
-    });
-    elements.seekbar.addEventListener("mousedown", handleSeekbarDrag);
-    elements.seekbar.addEventListener("touchstart", handleSeekbarDrag);
-    currentSong.audio.addEventListener("ended", handleAudioEnd);
-  }
   const handleAudioTimeUpdate = () => {
     if (isFinite(currentSong.audio.duration)) {
       const durationMinutes = Math.floor(currentSong.audio.duration / 60);
@@ -246,6 +211,10 @@
       elements.seekbarActive.style.width = `${currentSong.seekbarWidth}%`;
       elements.seekbarCircle.style.left = `calc(${currentSong.seekbarWidth}% - 6px)`;
     }
+  };
+  const handleSeekbarClick = (e) => {
+    e.preventDefault();
+    updateSeekbar(e.clientX);
   };
   const handleSeekbarDrag = (e) => {
     let isDragging = true;
@@ -303,6 +272,64 @@
       nextSong();
     }
   };
+  async function playSong(index, play = true) {
+    if (isPlayingSong) return;
+    isPlayingSong = true;
+    if (currentSong.index >= 0) {
+      currentSong.audio.pause();
+      currentSong.audio.currentTime = 0;
+      currentSong.audio.removeEventListener(
+        "timeupdate",
+        handleAudioTimeUpdate
+      );
+      elements.seekbar.removeEventListener("click", handleSeekbarClick);
+      elements.seekbar.removeEventListener("mousedown", handleSeekbarDrag);
+      elements.seekbar.removeEventListener("touchstart", handleSeekbarDrag);
+      currentSong.audio.removeEventListener("ended", handleAudioEnd);
+    }
+    const song = songs.get(index);
+    if (!song) {
+      console.error("Song not found");
+      isPlayingSong = false;
+      return;
+    }
+    currentSong = {
+      ...currentSong,
+      name: song.name,
+      singer: song.singer,
+      image: song.image,
+      url: song.url,
+      index: index,
+    };
+    if (cachedAudios.has(index)) {
+      currentSong.audio = cachedAudios.get(index);
+    } else {
+      currentSong.audio = new Audio(song.url);
+      cachedAudios.set(index, currentSong.audio);
+    }
+    currentSong.audio.preload = "auto";
+    currentSong.audio.currentTime = 0;
+    currentSong.audio.volume = currentSong.volume;
+    currentSongDiv = document.getElementById(`${index}`);
+    if (play) {
+      try {
+        await currentSong.audio.play();
+        renderCurrentSong();
+        localStorage.setItem("currentSongIndex", index.toString());
+      } catch (error) {
+        console.error("Playback failed:", error);
+      }
+    } else {
+      renderCurrentSong(false);
+      handleAudioTimeUpdate();
+    }
+    currentSong.audio.addEventListener("timeupdate", handleAudioTimeUpdate);
+    elements.seekbar.addEventListener("click", handleSeekbarClick);
+    elements.seekbar.addEventListener("mousedown", handleSeekbarDrag);
+    elements.seekbar.addEventListener("touchstart", handleSeekbarDrag);
+    currentSong.audio.addEventListener("ended", handleAudioEnd);
+    isPlayingSong = false;
+  }
   const nextSong = () => {
     if (currentSong.index >= 0) {
       if (shuffle) {
@@ -420,9 +447,6 @@
       const songDiv = target.closest(".song");
       songDiv && playSong(parseInt(songDiv.id));
     });
-    elements.themeBtn.addEventListener("click", () => {
-      changeTheme(!darkMode);
-    });
     elements.playPause.addEventListener("click", togglePlayPause);
     elements.previous.addEventListener("click", previousSong);
     elements.next.addEventListener("click", nextSong);
@@ -447,6 +471,9 @@
     const storedCurrentSongIndex = localStorage.getItem("currentSongIndex");
     if (storedCurrentSongIndex)
       currentSong.index = parseInt(storedCurrentSongIndex);
+    elements.themeBtn.addEventListener("click", () => {
+      changeTheme(!darkMode);
+    });
     fetchSongs()
       .then(() => {
         displaySongs();
