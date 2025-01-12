@@ -56,7 +56,7 @@
   }
 
   .song {
-    @apply bg-secondary-200 dark:bg-primary-800 lg:p-4 p-2.5 lg:rounded-xl rounded-lg relative flex items-center justify-between lg:gap-4 gap-2.5 cursor-pointer xl:hover:translate-x-1.5 hover:translate-x-1 transition-transform;
+    @apply bg-secondary-200 dark:bg-primary-800 lg:p-4 p-2.5 lg:rounded-xl rounded-lg relative flex items-center justify-between lg:gap-4 gap-2.5 cursor-pointer xl:hover:translate-x-1.5 lg:hover:translate-x-1 transition-transform;
   }
 
   .songIcon {
