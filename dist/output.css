@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Lemonada:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lemonada:wght@300..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 
 *,
 ::before,
@@ -566,6 +564,10 @@ video {
 * {
   box-sizing: border-box;
   font-family: "Nunito", sans-serif;
+}
+
+.font-lemonada {
+  font-family: "Lemonada", sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -1218,10 +1220,6 @@ video {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-}
-
-.font-lemonada {
-  font-family: "Lemonada", sans-serif;
 }
 
 .hover\:scale-105:hover {
