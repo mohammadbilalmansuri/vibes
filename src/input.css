@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lemonada:wght@300..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 
 @tailwind base;
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -33,6 +34,7 @@
 }
 
 @tailwind components;
+
 @layer components {
   .icon {
     @apply size-8 lg:size-9 flex items-center justify-center fill-primary-800 dark:fill-secondary-200 rounded-full bg-secondary-200 dark:bg-primary-800 transition-transform hover:scale-105 active:scale-95;
